@@ -1,0 +1,4 @@
+__pycache__/
+src/data/__pycache__
+lightning_logs/
+pretrained/

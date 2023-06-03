@@ -1,0 +1,118 @@
+# pytorch_lightning==1.8.4.post0
+seed_everything: true
+trainer:
+  logger: true
+  enable_checkpointing: true
+  callbacks: null
+  default_root_dir: null
+  gradient_clip_val: null
+  gradient_clip_algorithm: null
+  num_nodes: 1
+  num_processes: null
+  devices: 1
+  gpus: null
+  auto_select_gpus: false
+  tpu_cores: null
+  ipus: null
+  enable_progress_bar: true
+  overfit_batches: 0.0
+  track_grad_norm: -1
+  check_val_every_n_epoch: 1
+  fast_dev_run: false
+  max_epochs: -1
+  min_epochs: null
+  max_steps: -1
+  min_steps: null
+  max_time: null
+  limit_train_batches: null
+  limit_val_batches: null
+  limit_test_batches: null
+  limit_predict_batches: null
+  val_check_interval: 0.25
+  log_every_n_steps: 50
+  accelerator: gpu
+  strategy: null
+  sync_batchnorm: false
+  precision: 32
+  enable_model_summary: true
+  num_sanity_val_steps: 2
+  resume_from_checkpoint: null
+  profiler: null
+  benchmark: null
+  deterministic: null
+  reload_dataloaders_every_n_epochs: 0
+  auto_lr_find: false
+  replace_sampler_ddp: true
+  detect_anomaly: false
+  auto_scale_batch_size: false
+  plugins: null
+  amp_backend: native
+  amp_level: null
+  move_metrics_to_cpu: false
+  multiple_trainloader_mode: max_size_cycle
+  inference_mode: true
+data:
+  ctc_vocab_file: vocabs/c_vocab.json
+  ctc_delimeter: " "
+  tokenizer_ckpt: mrm8488/camembert2camembert_shared-finetuned-french-summarization
+  datasets:
+  - euronews
+  roots:
+  - null
+  normalize_waveform: false
+  load:
+  - pre-processed
+  padding: true
+  max_length_audio: null
+  max_length_ctc_labels: null
+  max_length_text: null
+  max_length_target_labels: null
+  pad_to_multiple_of_audio: null
+  pad_to_multiple_of_ctc_labels: null
+  pad_to_multiple_of_text: null
+  pad_to_multiple_of_target_labels: null
+  audio_embedding_pad_value: 0.0
+  text_embedding_pad_value: 0.0
+  text_embedding_padding: longest
+  text_embedding_max_length: 512
+val_loss_checkpoint:
+  dirpath: null
+  filename: '{epoch}-{step}'
+  monitor: val/loss
+  verbose: false
+  save_last: true
+  save_top_k: 1
+  save_weights_only: false
+  mode: min
+  auto_insert_metric_name: true
+  every_n_train_steps: null
+  train_time_interval: null
+  every_n_epochs: null
+  save_on_train_epoch_end: null
+model_summary:
+  max_depth: -1
+ckpt_path: null
+model:
+  class_path: src.models.adapter.LSTMCrossModalAdapter
+  init_args:
+    config_file: src/models/lstm-adapter.json
+    batch_size: 1
+    accumulate_grad_batches: 16
+    learning_rate: 0.00005
+    weight_decay: 0.0
+    beta_1: 0.9
+    beta_2: 0.99
+    emb_loss_type: mse
+    emb_loss_weight: 0.0
+    eos_loss_weight: 1.0
+    teacher_forcing: false
+    peeling_back: true
+    tf_ratio_offset: 1.0
+    tf_ratio_slope: 0.0004
+    freeze_encoder_decoder: true
+    freeze_eos_generator: false
+    eos_attention_window_size: 1
+    masked_modelling: false
+    p_mask: 0.065
+    M_mask: 10
+    predictions_file: eos_predictions.txt
